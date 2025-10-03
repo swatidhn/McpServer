@@ -1,0 +1,18 @@
+from mcp_client import get_quote, box_breathing
+
+def handle_copilot_query(user_query: str) -> str:
+    query = user_query.lower()
+
+    if "quote" in query:
+        keyword = query.replace("quote", "").strip()
+        if not keyword:
+            keyword = ""  # fallback to random quote
+        quote = get_quote(keyword)
+        return f"Here's a quote: \"{quote['text']}\" — {quote.get('author','Unknown')}"
+
+    elif "breath" in query or "breathe" in query:
+        exercise = box_breathing(60)
+        return f"Try this breathing pattern for 60s: {', '.join(exercise['steps'][:8])} ..."
+
+    else:
+        return "Sorry, I only provide quotes and breathing exercises. Try asking for one!"

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "q1",
+    "text": "The only limit to our realization of tomorrow is our doubts of today.",
+    "meta": {
+      "author": "Franklin D. Roosevelt"
+    }
+  },
+  {
+    "id": "q2",
+    "text": "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+    "meta": {
+      "author": "Martin Luther King Jr."
+    }
+  },
+  {
+    "id": "q3",
+    "text": "Life is what happens when you're busy making other plans.",
+    "meta": {
+      "author": "John Lennon"
+    }
+  },
+  {
+    "id": "q4",
+    "text": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    "meta": {
+      "author": "Ralph Waldo Emerson"
+    }
+  }
+]

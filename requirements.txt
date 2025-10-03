@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+chromadb>=0.6.3
+sentence-transformers
+torch       # if using HF models
+transformers # if using HF models
