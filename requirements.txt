@@ -1,6 +1,18 @@
-fastapi
-uvicorn[standard]
+# Web server
+fastapi==0.111.0
+uvicorn[standard]==0.23.2
+
+# Vector storage / embeddings
 chromadb>=0.6.3
-sentence-transformers
-torch       # if using HF models
-transformers # if using HF models
+sentence-transformers>=2.2.2
+
+# PyTorch backend (needed for sentence-transformers / HF models)
+torch>=2.1.0
+
+# Hugging Face transformers (optional, for HF models)
+transformers>=4.41.0
+
+# Common utilities
+numpy>=1.26.0
+scikit-learn>=1.3.2
+pydantic>=2.5.0
