@@ -8,7 +8,6 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 DB_DIR = os.path.join(os.path.dirname(__file__), "vectordb")
-
 app = FastAPI(title="MCP Server - Quotes, Breathing, Affirmations, Journaling")
 
 # ----------------------------
@@ -20,11 +19,9 @@ class QuoteResult(BaseModel):
     author: Optional[str] = None
     score: Optional[float] = None
 
-
 class BreathExerciseRequest(BaseModel):
     duration_seconds: int = 60
-    pattern: Optional[str] = "box"  # box, 4-7-8, coherent
-
+    pattern: Optional[str] = "box"
 
 # ----------------------------
 # Load vector store
@@ -46,18 +43,15 @@ def load_store():
 
     return documents, embeddings, vectorizer
 
-
 def cosine_similarity(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     a_norm = a / (np.linalg.norm(a, axis=1, keepdims=True) + 1e-10)
     b_norm = b / (np.linalg.norm(b, axis=1, keepdims=True) + 1e-10)
     return np.dot(a_norm, b_norm.T)
 
-
 @app.on_event("startup")
 def startup_event():
     global documents, embeddings, embedder
     documents, embeddings, embedder = load_store()
-
 
 # ----------------------------
 # Quotes endpoint
@@ -66,8 +60,7 @@ def startup_event():
 def search_quotes(q: Optional[str] = Query(None, min_length=1), k: int = Query(5, ge=1, le=20)):
     if not q:
         import random
-        idx = random.randint(0, len(documents) - 1)
-        doc = documents[idx]
+        doc = random.choice(documents)
         return [QuoteResult(
             id=doc.get("id"),
             text=doc.get("text"),
@@ -91,7 +84,6 @@ def search_quotes(q: Optional[str] = Query(None, min_length=1), k: int = Query(5
         ))
     return out
 
-
 # ----------------------------
 # Breathing exercises
 # ----------------------------
@@ -113,7 +105,6 @@ def suggest_breathing(req: BreathExerciseRequest):
 
     return {"duration_seconds": req.duration_seconds, "pattern": req.pattern, "steps": plan}
 
-
 # ----------------------------
 # Affirmations
 # ----------------------------
@@ -130,7 +121,6 @@ def get_affirmations(count: int = 3):
     import random
     return {"affirmations": random.sample(AFFIRMATIONS, min(count, len(AFFIRMATIONS)))}
 
-
 # ----------------------------
 # Journal prompts
 # ----------------------------
@@ -146,7 +136,6 @@ JOURNAL_PROMPTS = [
 def get_journal_prompt():
     import random
     return {"prompt": random.choice(JOURNAL_PROMPTS)}
-
 
 # ----------------------------
 # Run locally
